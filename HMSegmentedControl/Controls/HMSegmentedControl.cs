@@ -95,20 +95,13 @@ namespace HMSegmentedControlSample
         private bool touchEnabled;
         private float borderWidth;
         private float segmentWidth;
-        private int selectedSegmentIndex;
         private float selectionIndicatorBoxOpacity;
         private HMSegmentedControlBorderType borderType;
 
         public int SelectedIndex
         {
-            get
-            {
-                return selectedSegmentIndex;
-            }
-            set
-            {
-                selectedSegmentIndex = value;
-            }
+            get;
+            set;
         }
 
         public UIColor SelectionIndicatorColor
@@ -221,7 +214,7 @@ namespace HMSegmentedControlSample
             Opaque = false;
             SelectionIndicatorColor = UIColor.FromRGBA(52.0f / 255.0f, 181.0f / 255.0f, 229.0f / 255.0f, 1.0f);
 
-            selectedSegmentIndex = 0;
+            SelectedIndex = 0;
             SegmentEdgeInset = new UIEdgeInsets(0, 5, 0, 5);
             SelectionIndicatorHeight = 5.0f;
             selectionIndicatorEdgeInsets = new UIEdgeInsets(0, 0, 0, 0);
@@ -306,7 +299,7 @@ namespace HMSegmentedControlSample
         {
             var title = sectionTitles[index];
             var size = SizeF.Empty;
-            var selected = index == selectedSegmentIndex;
+            var selected = index == SelectedIndex;
 
             if (TitleFormatter == null)
             {
@@ -324,7 +317,7 @@ namespace HMSegmentedControlSample
         private NSAttributedString AttributedTitle(int index)
         {
             var title = sectionTitles[index];
-            var selected = index == selectedSegmentIndex;
+            var selected = index == SelectedIndex;
 
             return TitleFormatter != null 
                     ? TitleFormatter(this, title, index, selected) 
@@ -415,7 +408,7 @@ namespace HMSegmentedControlSample
                     var rectNew = new RectangleF(x, y, imageWidth, imageHeight);
 
                     var imageLayer = new CALayer { Frame = rectNew };
-                    if (selectedSegmentIndex == idx && sectionSelectedImages != null)
+                    if (SelectedIndex == idx && sectionSelectedImages != null)
                         imageLayer.Contents = sectionSelectedImages[idx].CGImage;
                     else
                         imageLayer.Contents = icon.CGImage;
@@ -489,7 +482,7 @@ namespace HMSegmentedControlSample
                     var imageLayer = new CALayer
                     { 
                         Frame = imageRect,
-                        Contents = (selectedSegmentIndex == idx && sectionSelectedImages != null) ? sectionSelectedImages[idx].CGImage : icon.CGImage
+                        Contents = (SelectedIndex == idx && sectionSelectedImages != null) ? sectionSelectedImages[idx].CGImage : icon.CGImage
                     };
 
                     scrollView.Layer.AddSublayer(imageLayer);
@@ -499,7 +492,7 @@ namespace HMSegmentedControlSample
                 }
             }
 
-            if (selectedSegmentIndex != -1)
+            if (SelectedIndex != -1)
             {
                 if (SelectionStyle == HMSegmentedControlSelectionStyle.Arrow)
                 {
@@ -597,22 +590,22 @@ namespace HMSegmentedControlSample
             switch (type)
             {
                 case HMSegmentedControlType.Text:
-                    sectionWidth = MeasureTitle(selectedSegmentIndex).Width;
+                    sectionWidth = MeasureTitle(SelectedIndex).Width;
                     break;
                 case HMSegmentedControlType.Image:
-                    sectionWidth = sectionImages[selectedSegmentIndex].Size.Width;
+                    sectionWidth = sectionImages[SelectedIndex].Size.Width;
                     break;
                 case HMSegmentedControlType.TextAndImage:
-                    var stringWidth = MeasureTitle(selectedSegmentIndex).Width;
-                    var imageWidth = sectionImages[selectedSegmentIndex].Size.Width;
+                    var stringWidth = MeasureTitle(SelectedIndex).Width;
+                    var imageWidth = sectionImages[SelectedIndex].Size.Width;
                     sectionWidth = Math.Max(stringWidth, imageWidth);
                     break;
             }
 
             if (SelectionStyle == HMSegmentedControlSelectionStyle.Arrow)
             {
-                var widthToEndOfSelectedSegment = (segmentWidth * selectedSegmentIndex) + segmentWidth;
-                var widthToStartOfSelectedIndex = segmentWidth * selectedSegmentIndex;
+                var widthToEndOfSelectedSegment = (segmentWidth * SelectedIndex) + segmentWidth;
+                var widthToStartOfSelectedIndex = segmentWidth * SelectedIndex;
                 var x = widthToStartOfSelectedIndex + ((widthToEndOfSelectedSegment - widthToStartOfSelectedIndex) / 2) - (SelectionIndicatorHeight / 2);
                 return new RectangleF(x - (SelectionIndicatorHeight / 2), indicatorYOffset, SelectionIndicatorHeight * 2, SelectionIndicatorHeight);
             }
@@ -622,8 +615,8 @@ namespace HMSegmentedControlSample
                     sectionWidth <= segmentWidth &&
                     segmentWidthStyle != HMSegmentedControlWidthStyle.Dynamic)
                 {
-                    var widthToEndOfSelectedSegment = (segmentWidth * selectedSegmentIndex) + segmentWidth;
-                    var widthToStartOfSelectedIndex = segmentWidth * selectedSegmentIndex;
+                    var widthToEndOfSelectedSegment = (segmentWidth * SelectedIndex) + segmentWidth;
+                    var widthToStartOfSelectedIndex = segmentWidth * SelectedIndex;
                     var x = ((widthToEndOfSelectedSegment - widthToStartOfSelectedIndex) / 2) + (widthToStartOfSelectedIndex - sectionWidth / 2);
                     return new RectangleF(x + selectionIndicatorEdgeInsets.Left, indicatorYOffset, sectionWidth - selectionIndicatorEdgeInsets.Right, SelectionIndicatorHeight);
                 }
@@ -635,16 +628,16 @@ namespace HMSegmentedControlSample
                         var i = 0;
                         foreach (var width in segmentWidths)
                         {
-                            if (selectedSegmentIndex == i)
+                            if (SelectedIndex == i)
                                 break;
                             selectedSegmentOffset += width;
                             i++;
                         }
 
-                        return new RectangleF(selectedSegmentOffset + selectionIndicatorEdgeInsets.Left, indicatorYOffset, segmentWidths[selectedSegmentIndex] - selectionIndicatorEdgeInsets.Right, SelectionIndicatorHeight + selectionIndicatorEdgeInsets.Bottom);
+                        return new RectangleF(selectedSegmentOffset + selectionIndicatorEdgeInsets.Left, indicatorYOffset, segmentWidths[SelectedIndex] - selectionIndicatorEdgeInsets.Right, SelectionIndicatorHeight + selectionIndicatorEdgeInsets.Bottom);
                     }
 
-                    return new RectangleF((segmentWidth + selectionIndicatorEdgeInsets.Left) * selectedSegmentIndex, indicatorYOffset, segmentWidth - selectionIndicatorEdgeInsets.Right, SelectionIndicatorHeight);
+                    return new RectangleF((segmentWidth + selectionIndicatorEdgeInsets.Left) * SelectedIndex, indicatorYOffset, segmentWidth - selectionIndicatorEdgeInsets.Right, SelectionIndicatorHeight);
                 }
             }
         }
@@ -658,16 +651,16 @@ namespace HMSegmentedControlSample
 
                 foreach (var width in segmentWidths)
                 {
-                    if (selectedSegmentIndex == i)
+                    if (SelectedIndex == i)
                         break;
                     selectedSegmentOffset += width;
                     i++;
                 }
 
-                return new RectangleF(selectedSegmentOffset, 0, segmentWidths[selectedSegmentIndex], Frame.Height);
+                return new RectangleF(selectedSegmentOffset, 0, segmentWidths[SelectedIndex], Frame.Height);
             }
 
-            return new RectangleF(segmentWidth * selectedSegmentIndex, 0, segmentWidth, Frame.Height);
+            return new RectangleF(segmentWidth * SelectedIndex, 0, segmentWidth, Frame.Height);
         }
 
         public int SectionCount
@@ -761,7 +754,7 @@ namespace HMSegmentedControlSample
 
         private void SetSelectedSegmentIndex(int index, bool animated = false, bool notify = false)
         {
-            selectedSegmentIndex = index;
+            SelectedIndex = index;
             SetNeedsDisplay();
 
             if (index == -1)
@@ -844,7 +837,7 @@ namespace HMSegmentedControlSample
 
             if (segmentWidthStyle == HMSegmentedControlWidthStyle.Fixed)
             {
-                rectForSelectedIndex = new RectangleF(segmentWidth * selectedSegmentIndex, 0, segmentWidth, Frame.Size.Height);
+                rectForSelectedIndex = new RectangleF(segmentWidth * SelectedIndex, 0, segmentWidth, Frame.Size.Height);
                 selectedSegmentOffset = (Frame.Width / 2) - (segmentWidth / 2);
             }
             else
@@ -853,14 +846,14 @@ namespace HMSegmentedControlSample
                 var offsetter = 0.0f;
                 foreach (var width in segmentWidths)
                 {
-                    if (selectedSegmentIndex == i)
+                    if (SelectedIndex == i)
                         break;
                     offsetter += width;
                     i++;
                 }
 
-                rectForSelectedIndex = new RectangleF(offsetter, 0, segmentWidths[selectedSegmentIndex], Frame.Size.Height);
-                selectedSegmentOffset = (Frame.Width / 2) - (segmentWidths[selectedSegmentIndex] / 2);
+                rectForSelectedIndex = new RectangleF(offsetter, 0, segmentWidths[SelectedIndex], Frame.Size.Height);
+                selectedSegmentOffset = (Frame.Width / 2) - (segmentWidths[SelectedIndex] / 2);
             }
 
             var rectToScrollTo = rectForSelectedIndex;
@@ -896,7 +889,7 @@ namespace HMSegmentedControlSample
                 }
             }
 
-            if (segment != selectedSegmentIndex && segment < SectionCount)
+            if (segment != SelectedIndex && segment < SectionCount)
             {
                 if (touchEnabled)
                     SetSelectedSegmentIndex(segment, true, true);
