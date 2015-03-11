@@ -98,9 +98,11 @@ namespace HMSegmentedControlSample
         public bool TouchEnabled { get; set; }
         public bool UserDraggable { get; set; }
         public int SelectedIndex { get; set; }
-        public UIColor SelectionIndicatorColor { get; set; }
         public UIFont Font { get; set; }
+        public UIFont SelectedFont { get; set; }
         public UIColor TextColor { get; set; }
+        public UIColor SelectedTextColor { get; set; }
+        public UIColor SelectionIndicatorColor { get; set; }
         public float SelectionIndicatorHeight { get; set; }
         public UIColor VerticalDividerColor { get; set; }
         public bool VerticalDividerEnabled { get; set; }
@@ -242,7 +244,7 @@ namespace HMSegmentedControlSample
             if (TitleFormatter == null)
             {
                 var nsTitle = new NSString(title);
-                size = nsTitle.GetSizeUsingAttributes(selected ? ResultingSelectedTitleTextAttributes() : ResultingTitleTextAttributes());
+                size = nsTitle.GetSizeUsingAttributes(selected ? GetSelectedTitleTextAttributes() : GetTitleTextAttributes());
             }
             else
             {
@@ -259,7 +261,7 @@ namespace HMSegmentedControlSample
 
             return TitleFormatter != null 
                     ? TitleFormatter(this, title, index, selected) 
-                    : new NSAttributedString(title, selected ? ResultingSelectedTitleTextAttributes() : ResultingTitleTextAttributes());
+                    : new NSAttributedString(title, selected ? GetSelectedTitleTextAttributes() : GetTitleTextAttributes());
         }
 
         public override void Draw(RectangleF rectangle)
@@ -838,18 +840,25 @@ namespace HMSegmentedControlSample
 
         #region Styling
 
-        private UIStringAttributes ResultingTitleTextAttributes()
+        private UIStringAttributes GetTitleTextAttributes()
         {
-            return new UIStringAttributes
-            { 
-                Font = Font ?? UIFont.FromName("STHeitiSC-Light", 18.0f), 
-                ForegroundColor = TextColor ?? UIColor.Black
-            };
+
+            var attributes = new UIStringAttributes();
+            if (Font != null)
+                attributes.Font = Font;
+            if (TextColor != null)
+                attributes.ForegroundColor = TextColor;
+            return attributes;
         }
 
-        private UIStringAttributes ResultingSelectedTitleTextAttributes()
+        private UIStringAttributes GetSelectedTitleTextAttributes()
         {
-            return ResultingTitleTextAttributes();
+            var attributes = new UIStringAttributes();
+            if (Font != null)
+                attributes.Font = Font;
+            if (SelectedTextColor != null)
+                attributes.ForegroundColor = SelectedTextColor;
+            return attributes;
         }
 
         #endregion
