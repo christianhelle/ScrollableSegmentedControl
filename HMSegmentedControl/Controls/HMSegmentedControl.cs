@@ -245,7 +245,8 @@ namespace HMSegmentedControlSample
             if (TitleFormatter == null)
             {
                 var nsTitle = new NSString(title);
-                size = nsTitle.GetSizeUsingAttributes(selected ? GetSelectedTitleTextAttributes() : GetTitleTextAttributes());
+                var stringAttributes = selected ? GetSelectedTitleTextAttributes() : GetTitleTextAttributes();
+                size = new Version(UIDevice.CurrentDevice.SystemVersion).Major < 7 ? nsTitle.StringSize(stringAttributes.Font) : nsTitle.GetSizeUsingAttributes(stringAttributes);  
             }
             else
             {
