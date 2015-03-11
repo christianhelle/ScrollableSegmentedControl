@@ -912,7 +912,7 @@ namespace HMSegmentedControlSample
     {
         protected override void Dispose(bool disposing)
         {
-            Debug.WriteLine("[DISPOSE] DisposableCALayer");
+            Console.WriteLine("[DISPOSE] DisposableCALayer");
             base.Dispose(disposing);
         }
     }
@@ -921,7 +921,7 @@ namespace HMSegmentedControlSample
     {
         protected override void Dispose(bool disposing)
         {
-            Debug.WriteLine("[DISPOSE] DisposableCATextLayer");
+            Console.WriteLine("[DISPOSE] DisposableCATextLayer");
             base.Dispose(disposing);
         }
     }
