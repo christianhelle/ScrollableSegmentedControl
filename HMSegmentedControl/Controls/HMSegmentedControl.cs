@@ -814,7 +814,7 @@ namespace HMSegmentedControlSample
 
             var segment = 0;
             if (segmentWidthStyle == HMSegmentedControlWidthStyle.Fixed)
-                segment = Convert.ToInt32((touchLocation.X + scrollView.ContentOffset.X) / segmentWidth);
+                segment = (int)Math.Truncate((touchLocation.X + scrollView.ContentOffset.X) / segmentWidth);
             else
             {
                 var widthLeft = touchLocation.X + scrollView.ContentOffset.X;
