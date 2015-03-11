@@ -581,7 +581,7 @@ namespace HMSegmentedControlSample
             var indicatorYOffset = 0.0f;
 
             if (SelectionIndicatorLocation == HMSegmentedControlIndicatorLocation.Down)
-                indicatorYOffset = Bounds.Size.Width - SelectionIndicatorHeight + selectionIndicatorEdgeInsets.Bottom;
+                indicatorYOffset = Bounds.Size.Height - SelectionIndicatorHeight + selectionIndicatorEdgeInsets.Bottom;
             else if (SelectionIndicatorLocation == HMSegmentedControlIndicatorLocation.Up)
                 indicatorYOffset = selectionIndicatorEdgeInsets.Top;
 
