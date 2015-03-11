@@ -203,9 +203,9 @@ namespace HMSegmentedControlSample
 
             ShouldAnimateUserSelection = true;
             selectionIndicatorBoxOpacity = 0.2f;
-            SelectionIndicatorArrowLayer = new CALayer();
-            SelectionIndicatorStripLayer = new CALayer();
-            SelectionIndicatorBoxLayer = new CALayer { Opacity = selectionIndicatorBoxOpacity, BorderWidth = 1.0f };
+            SelectionIndicatorArrowLayer = new DisposableCALayer();
+            SelectionIndicatorStripLayer = new DisposableCALayer();
+            SelectionIndicatorBoxLayer = new DisposableCALayer { Opacity = selectionIndicatorBoxOpacity, BorderWidth = 1.0f };
 
             ContentMode = UIViewContentMode.Redraw;
         }
@@ -277,7 +277,7 @@ namespace HMSegmentedControlSample
             SelectionIndicatorBoxLayer.BackgroundColor = SelectionIndicatorColor.CGColor;
             SelectionIndicatorBoxLayer.BorderColor = SelectionIndicatorColor.CGColor;
 
-            scrollView.Layer.Sublayers = new CALayer[0];
+            scrollView.Layer.Sublayers = new DisposableCALayer[0];
             ClearScrollViewSubLayers();
             var oldRect = rectangle;
         
@@ -321,7 +321,7 @@ namespace HMSegmentedControlSample
 
                     rect = new RectangleF((float)Math.Ceiling(rect.X), (float)Math.Ceiling(rect.Y), (float)Math.Ceiling(rect.Size.Width), (float)Math.Ceiling(rect.Size.Height));
 
-                    var titleLayer = new CATextLayer
+                    var titleLayer = new DisposableCATextLayer
                     {
                         Frame = rect,
                         AlignmentMode = CATextLayer.AlignmentCenter,
@@ -333,7 +333,7 @@ namespace HMSegmentedControlSample
 
                     if (VerticalDividerEnabled)
                     {
-                        var verticalDividerLayer = new CALayer { Frame = rectDiv, BackgroundColor = VerticalDividerColor.CGColor };
+                        var verticalDividerLayer = new DisposableCALayer { Frame = rectDiv, BackgroundColor = VerticalDividerColor.CGColor };
                         AddScrollViewSubLayer(verticalDividerLayer);
                     }
 
@@ -351,7 +351,7 @@ namespace HMSegmentedControlSample
                     var x = segmentWidth * idx + (segmentWidth - imageWidth) / 2.0f;
                     var rectNew = new RectangleF(x, y, imageWidth, imageHeight);
 
-                    var imageLayer = new CALayer { Frame = rectNew };
+                    var imageLayer = new DisposableCALayer { Frame = rectNew };
                     if (SelectedIndex == idx && sectionSelectedImages != null)
                         imageLayer.Contents = sectionSelectedImages[idx].CGImage;
                     else
@@ -361,7 +361,7 @@ namespace HMSegmentedControlSample
 
                     if (VerticalDividerEnabled && idx > 0)
                     {
-                        var verticalDividerLayer = new CALayer 
+                        var verticalDividerLayer = new DisposableCALayer 
                         {
                             Frame = new RectangleF((segmentWidth * idx) - (VerticalDividerWidth / 2), SelectionIndicatorHeight * 2, VerticalDividerWidth, Frame.Size.Height - (SelectionIndicatorHeight * 4)),
                             BackgroundColor = VerticalDividerColor.CGColor
@@ -414,7 +414,7 @@ namespace HMSegmentedControlSample
                     var imageRect = new RectangleF(imageXOffset, imageYOffset, imageWidth, imageHeight);
                     var textRect = new RectangleF((float)Math.Ceiling(textXOffset), (float)Math.Ceiling(yOffset), (float)Math.Ceiling(textWidth), (float)Math.Ceiling(stringHeight));
 
-                    var titleLayer = new CATextLayer
+                    var titleLayer = new DisposableCATextLayer
                     {
                         Frame = textRect,
                         AlignmentMode = CATextLayer.AlignmentCenter,
@@ -423,7 +423,7 @@ namespace HMSegmentedControlSample
                         ContentsScale = UIScreen.MainScreen.Scale
                     };
 
-                    var imageLayer = new CALayer
+                    var imageLayer = new DisposableCALayer
                     { 
                         Frame = imageRect,
                         Contents = (SelectedIndex == idx && sectionSelectedImages != null) ? sectionSelectedImages[idx].CGImage : icon.CGImage
@@ -462,7 +462,7 @@ namespace HMSegmentedControlSample
 
         private readonly List<CALayer> layers = new List<CALayer>();
         private void AddScrollViewSubLayer(CALayer layer)
-        {
+        {            
             scrollView.Layer.AddSublayer(layer);
             layers.Add(layer);
         }
@@ -473,26 +473,23 @@ namespace HMSegmentedControlSample
             layers.Add(layer);
         }
 
-        private readonly object syncLock = new object();
         private void ClearScrollViewSubLayers()
         {
-            lock (syncLock)
-            {                
-                foreach (var layer in layers)
-                {
-                    layer.RemoveFromSuperLayer();
-                    layer.Dispose();
-                }
-                layers.Clear();
+            foreach (var layer in layers)
+            {
+                layer.RemoveFromSuperLayer();
+                layer.Dispose();
             }
+
+            layers.Clear();
         }
 
         private void AddBackgroundAndBorderLayer(RectangleF fullRect)
         {
-            var backgroundLayer = new CALayer { Frame = fullRect };
+            var backgroundLayer = new DisposableCALayer { Frame = fullRect };
             InsertScrollViewSubLayer(backgroundLayer, 0);
 
-            var borderLayer = new CALayer { BackgroundColor = BorderColor.CGColor };
+            var borderLayer = new DisposableCALayer { BackgroundColor = BorderColor.CGColor };
             switch (borderType)
             {
                 case HMSegmentedControlBorderType.Top:
@@ -909,6 +906,24 @@ namespace HMSegmentedControlSample
         }
 
         #endregion
+    }
+
+    public class DisposableCALayer :CALayer
+    {
+        protected override void Dispose(bool disposing)
+        {
+            Debug.WriteLine("[DISPOSE] DisposableCALayer");
+            base.Dispose(disposing);
+        }
+    }
+
+    public class DisposableCATextLayer : CATextLayer
+    {
+        protected override void Dispose(bool disposing)
+        {
+            Debug.WriteLine("[DISPOSE] DisposableCALayer");
+            base.Dispose(disposing);
+        }
     }
 }
 
