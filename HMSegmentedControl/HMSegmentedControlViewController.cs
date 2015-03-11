@@ -21,16 +21,19 @@ namespace HMSegmentedControlSample
             View.BackgroundColor = UIColor.Black;
             EdgesForExtendedLayout = UIRectEdge.None;
 
-            var segmentedControl = new HMSegmentedControl(new List<string>{"JUKE", "Most Popular", "All", "Followed"});
-            segmentedControl.Frame = new RectangleF(0, 20, View.Frame.Width, 50);
-            segmentedControl.SelectionIndicatorHeight = 4.0f;
-            segmentedControl.SelectionStyle = HMSegmentedControlSelectionStyle.Box;
-            segmentedControl.BackgroundColor = UIColor.Black;
-            segmentedControl.TextColor = UIColor.White;
-            segmentedControl.SelectionIndicatorColor = UIColor.Yellow;
+            var segmentedControl = new HMSegmentedControl(new List<string>{"JUKE", "Top", "All", "Mine"});
             segmentedControl.Font = UIFont.FromName("STHeitiSC-Light", 18.0f);
-            segmentedControl.ShouldAnimateUserSelection = false;
-            segmentedControl.SelectionIndicatorLocation = HMSegmentedControlIndicatorLocation.Down;
+            segmentedControl.Frame = new RectangleF(0, 20, View.Frame.Width, 40);
+            segmentedControl.SegmentEdgeInset = new UIEdgeInsets(0, 10, 0, 10);
+            segmentedControl.SelectionStyle = HMSegmentedControlSelectionStyle.TextWidthStripe;
+            segmentedControl.SelectionIndicatorLocation = HMSegmentedControlIndicatorLocation.Up;
+            segmentedControl.SelectionIndicatorColor = UIColor.Yellow;
+            segmentedControl.TextColor = UIColor.White;
+            segmentedControl.SelectedTextColor = UIColor.Yellow;
+            segmentedControl.SegmentWidthStyle = HMSegmentedControlWidthStyle.Fixed;
+//            segmentedControl.VerticalDividerEnabled = true;
+//            segmentedControl.VerticalDividerColor = UIColor.Yellow;
+//            segmentedControl.VerticalDividerWidth = 1.0f;
             View.AddSubview(segmentedControl);
         }
     }
