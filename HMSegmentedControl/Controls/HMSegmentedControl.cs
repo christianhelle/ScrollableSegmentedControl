@@ -75,111 +75,82 @@ namespace HMSegmentedControlSample
 
     public class HMSegmentedControl : UIControl
     {
-        public HMSegmentedControl() {}
-        public HMSegmentedControl (NSCoder coder) : base (coder) {}
-        public HMSegmentedControl (NSObjectFlag objectFlag) : base (objectFlag) {}
-        public HMSegmentedControl (RectangleF frame) : base (frame) {}
-        public HMSegmentedControl (IntPtr handle) : base (handle) {}
+        private HMSegmentedControlType type;
+        private HMScrollView scrollView;
 
         private List<string> sectionTitles;
         private List<UIImage> sectionImages;
         private List<UIImage> sectionSelectedImages;
         private List<float> segmentWidths;
-        private HMSegmentedControlType type;
-        private HMScrollView scrollView;
-        private UIColor backgroundColor;
-        private UIColor borderColor;
+        private float segmentWidth;
+        private float borderWidth;
+
         private UIEdgeInsets selectionIndicatorEdgeInsets;
         private HMSegmentedControlWidthStyle segmentWidthStyle;
-        private bool userDraggable;
-        private bool touchEnabled;
-        private float borderWidth;
-        private float segmentWidth;
-        private float selectionIndicatorBoxOpacity;
         private HMSegmentedControlBorderType borderType;
+        private HMSegmentedControlIndicatorLocation selectionIndicatorLocation;
+        private float selectionIndicatorBoxOpacity;
 
-        public int SelectedIndex
-        {
-            get;
-            set;
-        }
+        public Func<HMSegmentedControl, string, int, bool, NSAttributedString> TitleFormatter { get; set; }
+        public EventHandler<int> IndexChange;
 
-        public UIColor SelectionIndicatorColor
-        {
-            get;
-            set;
-        }
-
-        public UIFont Font
-        {
-            get;
-            set;
-        }
-
-        public UIColor TextColor
-        {
-            get;
-            set;
-        }
-
-        public float SelectionIndicatorHeight
-        {
-            get;
-            set;
-        }
-
-        public Func<HMSegmentedControl, string, int, bool, NSAttributedString> TitleFormatter
-        {
-            get;
-            set;
-        }
-
-        public Action<int> IndexChange
-        {
-            get;
-            set;
-        }
-
-        public UIColor VerticalDividerColor
-        {
-            get;
-            set;
-        }
-
-        public bool VerticalDividerEnabled
-        {
-            get;
-            set;
-        }
-
-        public float VerticalDividerWidth
-        {
-            get;
-            set;
-        }
-
-        public HMSegmentedControlSelectionStyle SelectionStyle
-        {
-            get;
-            set;
-        }
-
-        public UIEdgeInsets SegmentEdgeInset
-        {
-            get;
-            set;
-        }
-
-        public HMSegmentedControlIndicatorLocation SelectionIndicatorLocation
-        {
-            get;
-            set;
-        }
-
+        public UIColor BorderColor { get; set; }
+        public bool TouchEnabled { get; set; }
+        public bool UserDraggable { get; set; }
+        public int SelectedIndex { get; set; }
+        public UIColor SelectionIndicatorColor { get; set; }
+        public UIFont Font { get; set; }
+        public UIColor TextColor { get; set; }
+        public float SelectionIndicatorHeight { get; set; }
+        public UIColor VerticalDividerColor { get; set; }
+        public bool VerticalDividerEnabled { get; set; }
+        public float VerticalDividerWidth { get; set; }
+        public HMSegmentedControlSelectionStyle SelectionStyle { get; set; }
+        public UIEdgeInsets SegmentEdgeInset { get; set; }
         public CALayer SelectionIndicatorBoxLayer { get; set; }
         public CALayer SelectionIndicatorArrowLayer { get; set; }
         public CALayer SelectionIndicatorStripLayer { get; set; }
         public bool ShouldAnimateUserSelection { get; set; }
+
+        public HMSegmentedControlBorderType BorderType
+        {
+            get { return borderType; }
+            set
+            {
+                borderType = value;
+                SetNeedsDisplay();
+            }
+        }
+
+        public HMSegmentedControlIndicatorLocation SelectionIndicatorLocation
+        {
+            get { return selectionIndicatorLocation; }
+            set
+            {
+                selectionIndicatorLocation = value;
+                if (value == HMSegmentedControlIndicatorLocation.None)
+                    SelectionIndicatorHeight = 0.0f;
+            }
+        }
+
+        public float SelectionIndicatorBoxOpacity
+        {
+            get { return selectionIndicatorBoxOpacity; }
+            set
+            {
+                selectionIndicatorBoxOpacity = value;
+                SelectionIndicatorBoxLayer.Opacity = value;
+            }
+        }
+
+        public HMSegmentedControlWidthStyle SegmentWidthStyle
+        {
+            get { return segmentWidthStyle; }
+            set
+            {
+                segmentWidthStyle = type == HMSegmentedControlType.Image ? HMSegmentedControlWidthStyle.Fixed : value;
+            }
+        }
 
         public HMSegmentedControl(IEnumerable<string> sectionTitles)
         {
@@ -210,7 +181,6 @@ namespace HMSegmentedControlSample
             scrollView = new HMScrollView { ScrollsToTop = false, ShowsVerticalScrollIndicator = false, ShowsHorizontalScrollIndicator = false };
             AddSubview(scrollView);
 
-            backgroundColor = UIColor.White;
             Opaque = false;
             SelectionIndicatorColor = UIColor.FromRGBA(52.0f / 255.0f, 181.0f / 255.0f, 229.0f / 255.0f, 1.0f);
 
@@ -221,11 +191,11 @@ namespace HMSegmentedControlSample
             SelectionStyle = HMSegmentedControlSelectionStyle.TextWidthStripe;
             SelectionIndicatorLocation = HMSegmentedControlIndicatorLocation.Up;
             segmentWidthStyle = HMSegmentedControlWidthStyle.Fixed;
-            userDraggable = true;
-            touchEnabled = true;
+            UserDraggable = true;
+            TouchEnabled = true;
             VerticalDividerEnabled = false;
             VerticalDividerColor = UIColor.Black;
-            borderColor = UIColor.Black;
+            BorderColor = UIColor.Black;
             borderWidth = 1.0f;
 
             ShouldAnimateUserSelection = true;
@@ -254,43 +224,11 @@ namespace HMSegmentedControlSample
             }
         }
 
-        public void SetSectionTitles(IEnumerable<string> sectionTitles)
+        public void SetSelectionIndicatorLocation(HMSegmentedControlIndicatorLocation value)
         {
-            this.sectionTitles = new List<string>(sectionTitles);
-            SetNeedsLayout();
-        }
-
-        public void SetSectionImages(IEnumerable<UIImage> sectionImages)
-        {
-            this.sectionImages = new List<UIImage>(sectionImages);
-            SetNeedsLayout();
-        }
-
-        public void SetSelectionIndicatorLocation(HMSegmentedControlIndicatorLocation indicatorLocation)
-        {
-            this.SelectionIndicatorLocation = indicatorLocation;
-            if (indicatorLocation == HMSegmentedControlIndicatorLocation.None)
+            SelectionIndicatorLocation = value;
+            if (value == HMSegmentedControlIndicatorLocation.None)
                 SelectionIndicatorHeight = 0.0f;
-        }
-
-        public void SetSelectionIndicatorBoxOpacity(float opacity)
-        {
-            selectionIndicatorBoxOpacity = opacity;
-            SelectionIndicatorBoxLayer.Opacity = opacity;
-        }
-
-        public void SetSegmentWidthStyle(HMSegmentedControlWidthStyle segmentWidthStyle)
-        {
-            if (type == HMSegmentedControlType.Image)
-                this.segmentWidthStyle = HMSegmentedControlWidthStyle.Fixed;
-            else
-                this.segmentWidthStyle = segmentWidthStyle;
-        }
-
-        public void SetBorderType(HMSegmentedControlBorderType borderType)
-        {
-            this.borderType = borderType;
-            SetNeedsDisplay();
         }
 
         #region Drawing
@@ -326,7 +264,8 @@ namespace HMSegmentedControlSample
 
         public override void Draw(RectangleF rectangle)
         {
-            backgroundColor.SetFill();
+            if (BackgroundColor != null)
+                BackgroundColor.SetFill();
 
             SelectionIndicatorArrowLayer.BackgroundColor = SelectionIndicatorColor.CGColor;
             SelectionIndicatorStripLayer.BackgroundColor = SelectionIndicatorColor.CGColor;
@@ -521,7 +460,7 @@ namespace HMSegmentedControlSample
             var backgroundLayer = new CALayer { Frame = fullRect };
             scrollView.Layer.InsertSublayer(backgroundLayer, 0);
 
-            var borderLayer = new CALayer { BackgroundColor = borderColor.CGColor };
+            var borderLayer = new CALayer { BackgroundColor = BorderColor.CGColor };
             switch (borderType)
             {
                 case HMSegmentedControlBorderType.Top:
@@ -691,7 +630,6 @@ namespace HMSegmentedControlSample
             {
                 for (int i = 0; i < sectionTitles.Count; i++)
                 {
-                    var title = sectionTitles[i];
                     var stringWidth = MeasureTitle(i).Width + SegmentEdgeInset.Left + SegmentEdgeInset.Right;
                     segmentWidth = Math.Max(stringWidth, segmentWidth);
                 }
@@ -734,7 +672,7 @@ namespace HMSegmentedControlSample
                 }
             }
 
-            scrollView.ScrollEnabled = userDraggable;
+            scrollView.ScrollEnabled = UserDraggable;
             scrollView.ContentSize = new SizeF(TotalSegmentControlWidth(), Frame.Size.Height);
         }
 
@@ -827,7 +765,7 @@ namespace HMSegmentedControlSample
                 SendActionForControlEvents(UIControlEvent.ValueChanged);
 
             if (IndexChange != null)
-                IndexChange(index);
+                IndexChange(this, index);
         }
 
         private void ScrollToSelectedSegmentIndex(bool animated)
@@ -880,9 +818,9 @@ namespace HMSegmentedControlSample
             else
             {
                 var widthLeft = touchLocation.X + scrollView.ContentOffset.X;
-                foreach (var witdh in segmentWidths)
+                foreach (var width in segmentWidths)
                 {
-                    widthLeft -= widthLeft;
+                    widthLeft -= width;
                     if (widthLeft <= 0)
                         break;
                     segment++;
@@ -891,7 +829,7 @@ namespace HMSegmentedControlSample
 
             if (segment != SelectedIndex && segment < SectionCount)
             {
-                if (touchEnabled)
+                if (TouchEnabled)
                     SetSelectedSegmentIndex(segment, true, true);
             }
         }
