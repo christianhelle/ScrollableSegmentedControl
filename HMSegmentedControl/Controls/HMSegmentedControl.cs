@@ -6,6 +6,7 @@ using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using MonoTouch.CoreAnimation;
 using System.Linq;
+using System.Diagnostics;
 
 namespace HMSegmentedControlSample
 {
@@ -276,6 +277,7 @@ namespace HMSegmentedControlSample
             SelectionIndicatorBoxLayer.BorderColor = SelectionIndicatorColor.CGColor;
 
             scrollView.Layer.Sublayers = new CALayer[0];
+            ClearScrollViewSubLayers();
             var oldRect = rectangle;
         
             if (type == HMSegmentedControlType.Text)
@@ -326,12 +328,12 @@ namespace HMSegmentedControlSample
                         AttributedString = AttributedTitle(idx),
                         ContentsScale = UIScreen.MainScreen.Scale,
                     };
-                    scrollView.Layer.AddSublayer(titleLayer);
+                    AddScrollViewSubLayer(titleLayer);
 
                     if (VerticalDividerEnabled)
                     {
                         var verticalDividerLayer = new CALayer { Frame = rectDiv, BackgroundColor = VerticalDividerColor.CGColor };
-                        scrollView.Layer.AddSublayer(verticalDividerLayer);
+                        AddScrollViewSubLayer(verticalDividerLayer);
                     }
 
                     AddBackgroundAndBorderLayer(rectFull);
@@ -354,7 +356,7 @@ namespace HMSegmentedControlSample
                     else
                         imageLayer.Contents = icon.CGImage;
 
-                    scrollView.Layer.AddSublayer(imageLayer);
+                    AddScrollViewSubLayer(imageLayer);
 
                     if (VerticalDividerEnabled && idx > 0)
                     {
@@ -363,7 +365,7 @@ namespace HMSegmentedControlSample
                             Frame = new RectangleF((segmentWidth * idx) - (VerticalDividerWidth / 2), SelectionIndicatorHeight * 2, VerticalDividerWidth, Frame.Size.Height - (SelectionIndicatorHeight * 4)),
                             BackgroundColor = VerticalDividerColor.CGColor
                         };
-                        scrollView.Layer.AddSublayer(verticalDividerLayer);
+                        AddScrollViewSubLayer(verticalDividerLayer);
                     }
 
                     AddBackgroundAndBorderLayer(rectNew);
@@ -426,8 +428,8 @@ namespace HMSegmentedControlSample
                         Contents = (SelectedIndex == idx && sectionSelectedImages != null) ? sectionSelectedImages[idx].CGImage : icon.CGImage
                     };
 
-                    scrollView.Layer.AddSublayer(imageLayer);
-                    scrollView.Layer.AddSublayer(titleLayer);
+                    AddScrollViewSubLayer(imageLayer);
+                    AddScrollViewSubLayer(titleLayer);
 
                     AddBackgroundAndBorderLayer(imageRect);
                 }
@@ -438,29 +440,56 @@ namespace HMSegmentedControlSample
                 if (SelectionStyle == HMSegmentedControlSelectionStyle.Arrow)
                 {
                     SetArrowFrame();
-                    scrollView.Layer.AddSublayer(SelectionIndicatorArrowLayer);
+                    AddScrollViewSubLayer(SelectionIndicatorArrowLayer);
                 }
                 else
                 {
                     if (SelectionIndicatorStripLayer.SuperLayer == null)
                     {
                         SelectionIndicatorStripLayer.Frame = FrameForSelectionIndicator();
-                        scrollView.Layer.AddSublayer(SelectionIndicatorStripLayer);
+                        AddScrollViewSubLayer(SelectionIndicatorStripLayer);
 
                         if (SelectionStyle == HMSegmentedControlSelectionStyle.Box && SelectionIndicatorBoxLayer.SuperLayer == null)
                         {
                             SelectionIndicatorBoxLayer.Frame = FrameForFillerSelectionIndicator();
-                            scrollView.Layer.InsertSublayer(SelectionIndicatorBoxLayer, 0);
+                            InsertScrollViewSubLayer(SelectionIndicatorBoxLayer, 0);
                         }
                     }
                 }
             }
         }
 
+        private readonly List<CALayer> layers = new List<CALayer>();
+        private void AddScrollViewSubLayer(CALayer layer)
+        {
+            scrollView.Layer.AddSublayer(layer);
+            layers.Add(layer);
+        }
+
+        private void InsertScrollViewSubLayer(CALayer layer,int index)
+        {
+            scrollView.Layer.InsertSublayer(layer, index);
+            layers.Add(layer);
+        }
+
+        private readonly object syncLock = new object();
+        private void ClearScrollViewSubLayers()
+        {
+            lock (syncLock)
+            {                
+                foreach (var layer in layers)
+                {
+                    layer.RemoveFromSuperLayer();
+                    layer.Dispose();
+                }
+                layers.Clear();
+            }
+        }
+
         private void AddBackgroundAndBorderLayer(RectangleF fullRect)
         {
             var backgroundLayer = new CALayer { Frame = fullRect };
-            scrollView.Layer.InsertSublayer(backgroundLayer, 0);
+            InsertScrollViewSubLayer(backgroundLayer, 0);
 
             var borderLayer = new CALayer { BackgroundColor = BorderColor.CGColor };
             switch (borderType)
@@ -478,7 +507,7 @@ namespace HMSegmentedControlSample
                     borderLayer.Frame = new RectangleF(0, 0, borderWidth, fullRect.Size.Height);
                     break;
             }
-            scrollView.Layer.AddSublayer(borderLayer);
+            AddScrollViewSubLayer(borderLayer);
         }
 
         private void SetArrowFrame()
@@ -711,7 +740,7 @@ namespace HMSegmentedControlSample
                 {
                     if (SelectionStyle == HMSegmentedControlSelectionStyle.Arrow)
                     {
-                        scrollView.Layer.AddSublayer(SelectionIndicatorArrowLayer);
+                        AddScrollViewSubLayer(SelectionIndicatorArrowLayer);
                         SetSelectedSegmentIndex(index, false, true);
                         return;
                     }
@@ -719,9 +748,9 @@ namespace HMSegmentedControlSample
                     {
                         if (SelectionIndicatorStripLayer.SuperLayer == null)
                         {
-                            scrollView.Layer.AddSublayer(SelectionIndicatorStripLayer);
+                            AddScrollViewSubLayer(SelectionIndicatorStripLayer);
                             if (SelectionStyle == HMSegmentedControlSelectionStyle.Box && SelectionIndicatorBoxLayer.SuperLayer == null)
-                                scrollView.Layer.InsertSublayer(SelectionIndicatorBoxLayer, 0);
+                                InsertScrollViewSubLayer(SelectionIndicatorBoxLayer, 0);
                             SetSelectedSegmentIndex(index, false, true);
                         }
                     }
@@ -859,6 +888,23 @@ namespace HMSegmentedControlSample
             if (SelectedTextColor != null)
                 attributes.ForegroundColor = SelectedTextColor;
             return attributes;
+        }
+
+        #endregion
+
+        #region Dispose
+
+        protected override void Dispose(bool disposing)
+        {   
+            ClearScrollViewSubLayers();
+            
+            foreach (var view in Subviews)
+            {
+                view.RemoveFromSuperview();
+                view.Dispose();
+            }
+            
+            base.Dispose(disposing);
         }
 
         #endregion
