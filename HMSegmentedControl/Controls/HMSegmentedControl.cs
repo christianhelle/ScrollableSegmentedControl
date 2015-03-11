@@ -652,7 +652,7 @@ namespace HMSegmentedControlSample
             scrollView.ContentInset = UIEdgeInsets.Zero;
             scrollView.Frame = new RectangleF(0, 0, Frame.Width, Frame.Height);
 
-            if (SectionCount == 0)
+            if (SectionCount > 0)
                 segmentWidth = Frame.Size.Width / SectionCount;
 
             if (type == HMSegmentedControlType.Text && segmentWidthStyle == HMSegmentedControlWidthStyle.Fixed)
@@ -908,7 +908,7 @@ namespace HMSegmentedControlSample
         #endregion
     }
 
-    public class DisposableCALayer :CALayer
+    public class DisposableCALayer : CALayer
     {
         protected override void Dispose(bool disposing)
         {
@@ -921,7 +921,7 @@ namespace HMSegmentedControlSample
     {
         protected override void Dispose(bool disposing)
         {
-            Debug.WriteLine("[DISPOSE] DisposableCALayer");
+            Debug.WriteLine("[DISPOSE] DisposableCATextLayer");
             base.Dispose(disposing);
         }
     }
