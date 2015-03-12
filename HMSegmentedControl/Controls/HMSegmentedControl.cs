@@ -502,7 +502,7 @@ namespace HMSegmentedControlSample
                     borderLayer.Frame = new RectangleF(0, fullRect.Size.Height - borderWidth, fullRect.Size.Width, borderWidth);
                     break;
                 case HMSegmentedControlBorderType.Right:
-                    borderLayer.Frame = new RectangleF(0, 0, borderWidth, fullRect.Size.Height);
+                    borderLayer.Frame = new RectangleF(fullRect.Size.Width - borderWidth, 0, borderWidth, fullRect.Size.Height);
                     break;
             }
             AddScrollViewSubLayer(borderLayer);
