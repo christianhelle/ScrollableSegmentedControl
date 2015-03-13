@@ -475,7 +475,8 @@ namespace HMSegmentedControlSample
 
         private void ClearScrollViewSubLayers()
         {
-            foreach (var layer in layers)
+            var diposables = layers.Where(c => c != SelectionIndicatorArrowLayer && c != SelectionIndicatorBoxLayer && c != SelectionIndicatorStripLayer);
+            foreach (var layer in diposables)
             {
                 layer.RemoveFromSuperLayer();
                 layer.Dispose();
