@@ -896,6 +896,10 @@ namespace HMSegmentedControlSample
         protected override void Dispose(bool disposing)
         {   
             ClearScrollViewSubLayers();
+
+            SelectionIndicatorBoxLayer.Dispose();
+            SelectionIndicatorStripLayer.Dispose();
+            SelectionIndicatorArrowLayer.Dispose();
             
             foreach (var view in Subviews)
             {
