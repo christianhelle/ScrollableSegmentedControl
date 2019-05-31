@@ -1,0 +1,6 @@
+_mono_pmip
+_xamarin_dyn_objc_msgSend
+_xamarin_dyn_objc_msgSendSuper
+_xamarin_dyn_objc_msgSend_stret
+_xamarin_dyn_objc_msgSendSuper_stret
+_mono_profiler_init_log

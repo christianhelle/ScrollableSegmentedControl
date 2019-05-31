@@ -1,0 +1,13 @@
+/Users/ethanzhao/Documents/GitHubForks/HMSegmentedControl/HMSegmentedControl/obj/iPhoneSimulator/Debug/device-builds/iphone11.8-12.2/ibtool/_BundleResourceWithLogicalName.items
+/Users/ethanzhao/Documents/GitHubForks/HMSegmentedControl/HMSegmentedControl/obj/iPhoneSimulator/Debug/device-builds/iphone11.8-12.2/actool/_PartialAppManifest.items
+/Users/ethanzhao/Documents/GitHubForks/HMSegmentedControl/HMSegmentedControl/obj/iPhoneSimulator/Debug/device-builds/iphone11.8-12.2/actool/_BundleResourceWithLogicalName.items
+/Users/ethanzhao/Documents/GitHubForks/HMSegmentedControl/HMSegmentedControl/obj/iPhoneSimulator/Debug/device-builds/iphone11.8-12.2/coremlc/_PartialAppManifest.items
+/Users/ethanzhao/Documents/GitHubForks/HMSegmentedControl/HMSegmentedControl/obj/iPhoneSimulator/Debug/device-builds/iphone11.8-12.2/coremlc/_BundleResourceWithLogicalName.items
+/Users/ethanzhao/Documents/GitHubForks/HMSegmentedControl/HMSegmentedControl/obj/iPhoneSimulator/Debug/device-builds/iphone11.8-12.2/optimized/Default-568h@2x.png
+/Users/ethanzhao/Documents/GitHubForks/HMSegmentedControl/HMSegmentedControl/obj/iPhoneSimulator/Debug/device-builds/iphone11.8-12.2/optimized/
+/Users/ethanzhao/Documents/GitHubForks/HMSegmentedControl/HMSegmentedControl/obj/iPhoneSimulator/Debug/HMSegmentedControl.csprojAssemblyReference.cache
+/Users/ethanzhao/Documents/GitHubForks/HMSegmentedControl/HMSegmentedControl/obj/iPhoneSimulator/Debug/HMSegmentedControl.csproj.CoreCompileInputs.cache
+/Users/ethanzhao/Documents/GitHubForks/HMSegmentedControl/HMSegmentedControl/bin/iPhoneSimulator/Debug/HMSegmentedControl.exe
+/Users/ethanzhao/Documents/GitHubForks/HMSegmentedControl/HMSegmentedControl/bin/iPhoneSimulator/Debug/HMSegmentedControl.pdb
+/Users/ethanzhao/Documents/GitHubForks/HMSegmentedControl/HMSegmentedControl/obj/iPhoneSimulator/Debug/HMSegmentedControl.exe
+/Users/ethanzhao/Documents/GitHubForks/HMSegmentedControl/HMSegmentedControl/obj/iPhoneSimulator/Debug/HMSegmentedControl.pdb
