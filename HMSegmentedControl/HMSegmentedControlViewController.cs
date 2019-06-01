@@ -1,8 +1,8 @@
-﻿using System;
-using MonoTouch.UIKit;
-using System.Drawing;
+using System;
+using UIKit;
+using CoreGraphics;
 using System.Collections.Generic;
-using MonoTouch.Foundation;
+using Foundation;
 
 namespace HMSegmentedControlSample
 {
@@ -40,7 +40,7 @@ namespace HMSegmentedControlSample
                 "Bookmarked"
             });
             segmentedControl.Font = UIFont.FromName("STHeitiSC-Light", 18.0f);
-            segmentedControl.Frame = new RectangleF(0, y, View.Frame.Width, 40);
+            segmentedControl.Frame = new CGRect(0, y, View.Frame.Width, 40);
             segmentedControl.SegmentEdgeInset = new UIEdgeInsets(0, 10, 0, 10);
             segmentedControl.SelectionStyle = HMSegmentedControlSelectionStyle.TextWidthStripe;
             segmentedControl.SelectionIndicatorLocation = HMSegmentedControlIndicatorLocation.Down;
@@ -59,7 +59,7 @@ namespace HMSegmentedControlSample
                 "Bookmarked"
             });
             segmentedControl.Font = UIFont.FromName("STHeitiSC-Light", 18.0f);
-            segmentedControl.Frame = new RectangleF(0, y, View.Frame.Width, 40);
+            segmentedControl.Frame = new CGRect(0, y, View.Frame.Width, 40);
             segmentedControl.SegmentEdgeInset = new UIEdgeInsets(0, 10, 0, 10);
             segmentedControl.SelectionStyle = HMSegmentedControlSelectionStyle.FullWidthStripe;
             segmentedControl.SelectionIndicatorLocation = HMSegmentedControlIndicatorLocation.Down;
@@ -78,7 +78,7 @@ namespace HMSegmentedControlSample
                 "Bookmarked"
             });
             segmentedControl.Font = UIFont.FromName("STHeitiSC-Light", 18.0f);
-            segmentedControl.Frame = new RectangleF(0, y, View.Frame.Width, 40);
+            segmentedControl.Frame = new CGRect(0, y, View.Frame.Width, 40);
             segmentedControl.SegmentEdgeInset = new UIEdgeInsets(0, 10, 0, 10);
             segmentedControl.SelectionStyle = HMSegmentedControlSelectionStyle.TextWidthStripe;
             segmentedControl.SelectionIndicatorLocation = HMSegmentedControlIndicatorLocation.Up;
@@ -97,7 +97,7 @@ namespace HMSegmentedControlSample
                 "Bookmarked"
             });
             segmentedControl.Font = UIFont.FromName("STHeitiSC-Light", 18.0f);
-            segmentedControl.Frame = new RectangleF(0, y, View.Frame.Width, 40);
+            segmentedControl.Frame = new CGRect(0, y, View.Frame.Width, 40);
             segmentedControl.SegmentEdgeInset = new UIEdgeInsets(0, 10, 0, 10);
             segmentedControl.SelectionStyle = HMSegmentedControlSelectionStyle.FullWidthStripe;
             segmentedControl.SelectionIndicatorLocation = HMSegmentedControlIndicatorLocation.Up;
@@ -116,7 +116,7 @@ namespace HMSegmentedControlSample
                 "Bookmarked"
             });
             segmentedControl.Font = UIFont.FromName("STHeitiSC-Light", 18.0f);
-            segmentedControl.Frame = new RectangleF(0, y, View.Frame.Width, 40);
+            segmentedControl.Frame = new CGRect(0, y, View.Frame.Width, 40);
             segmentedControl.SegmentEdgeInset = new UIEdgeInsets(0, 10, 0, 10);
             segmentedControl.SelectionStyle = HMSegmentedControlSelectionStyle.Box;
             segmentedControl.SelectionIndicatorLocation = HMSegmentedControlIndicatorLocation.Up;
@@ -135,7 +135,7 @@ namespace HMSegmentedControlSample
                 "Bookmarked"
             });
             segmentedControl.Font = UIFont.FromName("STHeitiSC-Light", 18.0f);
-            segmentedControl.Frame = new RectangleF(0, y, View.Frame.Width, 40);
+            segmentedControl.Frame = new CGRect(0, y, View.Frame.Width, 40);
             segmentedControl.SegmentEdgeInset = new UIEdgeInsets(0, 10, 0, 10);
             segmentedControl.SelectionStyle = HMSegmentedControlSelectionStyle.Box;
             segmentedControl.SelectionIndicatorLocation = HMSegmentedControlIndicatorLocation.Down;
