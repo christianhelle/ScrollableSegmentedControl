@@ -1,6 +1,6 @@
 namespace ChristianHelle.Controls.iOS
 {
-    public enum HMSegmentedControlSelectionStyle
+    public enum ScrollableSegmentedControlSelectionStyle
     {
         TextWidthStripe,
         FullWidthStripe,

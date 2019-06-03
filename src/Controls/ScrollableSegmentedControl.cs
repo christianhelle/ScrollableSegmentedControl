@@ -8,41 +8,41 @@ using UIKit;
 
 namespace ChristianHelle.Controls.iOS
 {
-    public class HMSegmentedControl : UIControl
+    public class ScrollableSegmentedControl : UIControl
     {
-        private HMSegmentedControlBorderType borderType;
+        private ScrollableSegmentedControlBorderType borderType;
         private float borderWidth;
         public EventHandler<int> IndexChange;
-        private HMScrollView scrollView;
+        private ScrollableScrollView scrollView;
         private readonly List<UIImage> sectionImages;
         private readonly List<UIImage> sectionSelectedImages;
 
         private readonly List<string> sectionTitles;
         private nfloat segmentWidth;
         private List<float> segmentWidths;
-        private HMSegmentedControlWidthStyle segmentWidthStyle;
+        private ScrollableSegmentedControlWidthStyle segmentWidthStyle;
         private float selectionIndicatorBoxOpacity;
 
         private UIEdgeInsets selectionIndicatorEdgeInsets;
-        private HMSegmentedControlIndicatorLocation selectionIndicatorLocation;
-        private readonly HMSegmentedControlType type;
+        private ScrollableSegmentedControlIndicatorLocation selectionIndicatorLocation;
+        private readonly ScrollableSegmentedControlType type;
 
-        public HMSegmentedControl(IEnumerable<string> sectionTitles)
+        public ScrollableSegmentedControl(IEnumerable<string> sectionTitles)
         {
             Initialize();
             this.sectionTitles = new List<string>(sectionTitles);
-            type = HMSegmentedControlType.Text;
+            type = ScrollableSegmentedControlType.Text;
         }
 
-        public HMSegmentedControl(IEnumerable<UIImage> sectionImages, IEnumerable<UIImage> sectionSelectedImages)
+        public ScrollableSegmentedControl(IEnumerable<UIImage> sectionImages, IEnumerable<UIImage> sectionSelectedImages)
         {
             Initialize();
             this.sectionImages = new List<UIImage>(sectionImages);
             this.sectionSelectedImages = new List<UIImage>(sectionSelectedImages);
-            type = HMSegmentedControlType.Image;
+            type = ScrollableSegmentedControlType.Image;
         }
 
-        public HMSegmentedControl(
+        public ScrollableSegmentedControl(
             IEnumerable<UIImage> sectionImages,
             IEnumerable<UIImage> sectionSelectedImages,
             IEnumerable<string> sectionTitles)
@@ -51,10 +51,10 @@ namespace ChristianHelle.Controls.iOS
             this.sectionSelectedImages = new List<UIImage>(sectionSelectedImages);
             this.sectionTitles = new List<string>(sectionTitles);
             this.sectionImages = new List<UIImage>(sectionImages);
-            type = HMSegmentedControlType.TextAndImage;
+            type = ScrollableSegmentedControlType.TextAndImage;
         }
 
-        public Func<HMSegmentedControl, string, int, bool, NSAttributedString> TitleFormatter { get; set; }
+        public Func<ScrollableSegmentedControl, string, int, bool, NSAttributedString> TitleFormatter { get; set; }
 
         public UIColor BorderColor { get; set; }
         public bool TouchEnabled { get; set; }
@@ -69,14 +69,14 @@ namespace ChristianHelle.Controls.iOS
         public UIColor VerticalDividerColor { get; set; }
         public bool VerticalDividerEnabled { get; set; }
         public float VerticalDividerWidth { get; set; }
-        public HMSegmentedControlSelectionStyle SelectionStyle { get; set; }
+        public ScrollableSegmentedControlSelectionStyle SelectionStyle { get; set; }
         public UIEdgeInsets SegmentEdgeInset { get; set; }
         public CALayer SelectionIndicatorBoxLayer { get; set; }
         public CALayer SelectionIndicatorArrowLayer { get; set; }
         public CALayer SelectionIndicatorStripLayer { get; set; }
         public bool ShouldAnimateUserSelection { get; set; }
 
-        public HMSegmentedControlBorderType BorderType
+        public ScrollableSegmentedControlBorderType BorderType
         {
             get => borderType;
             set
@@ -86,13 +86,13 @@ namespace ChristianHelle.Controls.iOS
             }
         }
 
-        public HMSegmentedControlIndicatorLocation SelectionIndicatorLocation
+        public ScrollableSegmentedControlIndicatorLocation SelectionIndicatorLocation
         {
             get => selectionIndicatorLocation;
             set
             {
                 selectionIndicatorLocation = value;
-                if (value == HMSegmentedControlIndicatorLocation.None)
+                if (value == ScrollableSegmentedControlIndicatorLocation.None)
                     SelectionIndicatorHeight = 0.0f;
             }
         }
@@ -107,11 +107,11 @@ namespace ChristianHelle.Controls.iOS
             }
         }
 
-        public HMSegmentedControlWidthStyle SegmentWidthStyle
+        public ScrollableSegmentedControlWidthStyle SegmentWidthStyle
         {
             get => segmentWidthStyle;
             set => segmentWidthStyle =
-                type == HMSegmentedControlType.Image ? HMSegmentedControlWidthStyle.Fixed : value;
+                type == ScrollableSegmentedControlType.Image ? ScrollableSegmentedControlWidthStyle.Fixed : value;
         }
 
         public override CGRect Frame
@@ -127,7 +127,7 @@ namespace ChristianHelle.Controls.iOS
 
         private void Initialize()
         {
-            scrollView = new HMScrollView
+            scrollView = new ScrollableScrollView
                 {ScrollsToTop = false, ShowsVerticalScrollIndicator = false, ShowsHorizontalScrollIndicator = false};
             AddSubview(scrollView);
 
@@ -138,9 +138,9 @@ namespace ChristianHelle.Controls.iOS
             SegmentEdgeInset = new UIEdgeInsets(0, 5, 0, 5);
             SelectionIndicatorHeight = 5.0f;
             selectionIndicatorEdgeInsets = new UIEdgeInsets(0, 0, 0, 0);
-            SelectionStyle = HMSegmentedControlSelectionStyle.TextWidthStripe;
-            SelectionIndicatorLocation = HMSegmentedControlIndicatorLocation.Up;
-            segmentWidthStyle = HMSegmentedControlWidthStyle.Fixed;
+            SelectionStyle = ScrollableSegmentedControlSelectionStyle.TextWidthStripe;
+            SelectionIndicatorLocation = ScrollableSegmentedControlIndicatorLocation.Up;
+            segmentWidthStyle = ScrollableSegmentedControlWidthStyle.Fixed;
             UserDraggable = true;
             TouchEnabled = true;
             VerticalDividerEnabled = false;
@@ -164,10 +164,10 @@ namespace ChristianHelle.Controls.iOS
             UpdateSegmentRects();
         }
 
-        public void SetSelectionIndicatorLocation(HMSegmentedControlIndicatorLocation value)
+        public void SetSelectionIndicatorLocation(ScrollableSegmentedControlIndicatorLocation value)
         {
             SelectionIndicatorLocation = value;
-            if (value == HMSegmentedControlIndicatorLocation.None)
+            if (value == ScrollableSegmentedControlIndicatorLocation.None)
                 SelectionIndicatorHeight = 0.0f;
         }
 
@@ -182,7 +182,7 @@ namespace ChristianHelle.Controls.iOS
                 return;
 
             var segment = 0;
-            if (segmentWidthStyle == HMSegmentedControlWidthStyle.Fixed)
+            if (segmentWidthStyle == ScrollableSegmentedControlWidthStyle.Fixed)
             {
                 segment = (int) Math.Truncate((touchLocation.X + scrollView.ContentOffset.X) / segmentWidth);
             }
@@ -275,7 +275,7 @@ namespace ChristianHelle.Controls.iOS
             ClearScrollViewSubLayers();
             var oldRect = rect;
 
-            if (type == HMSegmentedControlType.Text)
+            if (type == ScrollableSegmentedControlType.Text)
                 for (var idx = 0; idx < sectionTitles.Count; idx++)
                 {
                     var size = MeasureTitle(idx);
@@ -283,14 +283,14 @@ namespace ChristianHelle.Controls.iOS
                     var stringHeight = size.Height;
                     CGRect rectangle, rectDiv, rectFull;
 
-                    var locationUp = SelectionIndicatorLocation == HMSegmentedControlIndicatorLocation.Up;
-                    var selectionStyleNotBox = SelectionStyle != HMSegmentedControlSelectionStyle.Box;
+                    var locationUp = SelectionIndicatorLocation == ScrollableSegmentedControlIndicatorLocation.Up;
+                    var selectionStyleNotBox = SelectionStyle != ScrollableSegmentedControlSelectionStyle.Box;
                     var y = (float) Math.Round(
                         (Frame.Height - (selectionStyleNotBox ? 1 : 0 * SelectionIndicatorHeight)) / 2 -
                         stringHeight / 2 +
                         SelectionIndicatorHeight * (locationUp ? 1 : 0));
 
-                    if (segmentWidthStyle == HMSegmentedControlWidthStyle.Fixed)
+                    if (segmentWidthStyle == ScrollableSegmentedControlWidthStyle.Fixed)
                     {
                         rectangle = new CGRect(
                             segmentWidth * idx + (segmentWidth - stringWidth) / 2,
@@ -351,7 +351,7 @@ namespace ChristianHelle.Controls.iOS
 
                     AddBackgroundAndBorderLayer(rectFull);
                 }
-            else if (type == HMSegmentedControlType.Image)
+            else if (type == ScrollableSegmentedControlType.Image)
                 for (var idx = 0; idx < sectionTitles.Count; idx++)
                 {
                     var icon = sectionImages[idx];
@@ -359,7 +359,7 @@ namespace ChristianHelle.Controls.iOS
                     var imageHeight = icon.Size.Height;
                     var y = (float) Math.Round(Frame.Height - SelectionIndicatorHeight) / 2 -
                             imageHeight / 2 +
-                            (SelectionIndicatorLocation == HMSegmentedControlIndicatorLocation.Up
+                            (SelectionIndicatorLocation == ScrollableSegmentedControlIndicatorLocation.Up
                                 ? SelectionIndicatorHeight
                                 : 0);
                     var x = segmentWidth * idx + (segmentWidth - imageWidth) / 2.0f;
@@ -389,7 +389,7 @@ namespace ChristianHelle.Controls.iOS
 
                     AddBackgroundAndBorderLayer(rectNew);
                 }
-            else if (type == HMSegmentedControlType.TextAndImage)
+            else if (type == ScrollableSegmentedControlType.TextAndImage)
                 for (var idx = 0; idx < sectionTitles.Count; idx++)
                 {
                     var icon = sectionImages[idx];
@@ -403,7 +403,7 @@ namespace ChristianHelle.Controls.iOS
                     var textXOffset = SegmentEdgeInset.Left;
                     var textWidth = (nfloat) 0.0f;
 
-                    if (segmentWidthStyle == HMSegmentedControlWidthStyle.Fixed)
+                    if (segmentWidthStyle == ScrollableSegmentedControlWidthStyle.Fixed)
                     {
                         imageXOffset = segmentWidth * idx + segmentWidth / 2.0f - imageWidth / 2.0f;
                         textXOffset = segmentWidth * idx;
@@ -459,7 +459,7 @@ namespace ChristianHelle.Controls.iOS
 
             if (SelectedIndex != -1)
             {
-                if (SelectionStyle == HMSegmentedControlSelectionStyle.Arrow)
+                if (SelectionStyle == ScrollableSegmentedControlSelectionStyle.Arrow)
                 {
                     SetArrowFrame();
                     AddScrollViewSubLayer(SelectionIndicatorArrowLayer);
@@ -471,7 +471,7 @@ namespace ChristianHelle.Controls.iOS
                         SelectionIndicatorStripLayer.Frame = FrameForSelectionIndicator();
                         AddScrollViewSubLayer(SelectionIndicatorStripLayer);
 
-                        if (SelectionStyle == HMSegmentedControlSelectionStyle.Box &&
+                        if (SelectionStyle == ScrollableSegmentedControlSelectionStyle.Box &&
                             SelectionIndicatorBoxLayer.SuperLayer == null)
                         {
                             SelectionIndicatorBoxLayer.Frame = FrameForFillerSelectionIndicator();
@@ -519,20 +519,20 @@ namespace ChristianHelle.Controls.iOS
             var borderLayer = new DisposableCALayer {BackgroundColor = BorderColor.CGColor};
             switch (borderType)
             {
-                case HMSegmentedControlBorderType.Top:
+                case ScrollableSegmentedControlBorderType.Top:
                     borderLayer.Frame = new CGRect(0, 0, fullRect.Size.Width, borderWidth);
                     break;
-                case HMSegmentedControlBorderType.Left:
+                case ScrollableSegmentedControlBorderType.Left:
                     borderLayer.Frame = new CGRect(0, 0, borderWidth, fullRect.Size.Height);
                     break;
-                case HMSegmentedControlBorderType.Bottom:
+                case ScrollableSegmentedControlBorderType.Bottom:
                     borderLayer.Frame = new CGRect(
                         0,
                         fullRect.Size.Height - borderWidth,
                         fullRect.Size.Width,
                         borderWidth);
                     break;
-                case HMSegmentedControlBorderType.Right:
+                case ScrollableSegmentedControlBorderType.Right:
                     borderLayer.Frame = new CGRect(
                         fullRect.Size.Width - borderWidth,
                         0,
@@ -550,7 +550,7 @@ namespace ChristianHelle.Controls.iOS
             SelectionIndicatorArrowLayer.Mask = null;
 
             CGPoint p1, p2, p3;
-            if (SelectionIndicatorLocation == HMSegmentedControlIndicatorLocation.Down)
+            if (SelectionIndicatorLocation == ScrollableSegmentedControlIndicatorLocation.Down)
             {
                 p1 = new CGPoint(SelectionIndicatorArrowLayer.Bounds.Size.Width / 2, 0);
                 p2 = new CGPoint(0, SelectionIndicatorArrowLayer.Bounds.Size.Height);
@@ -558,7 +558,7 @@ namespace ChristianHelle.Controls.iOS
                     SelectionIndicatorArrowLayer.Bounds.Size.Width,
                     SelectionIndicatorArrowLayer.Bounds.Size.Height);
             }
-            else if (SelectionIndicatorLocation == HMSegmentedControlIndicatorLocation.Up)
+            else if (SelectionIndicatorLocation == ScrollableSegmentedControlIndicatorLocation.Up)
             {
                 p1 = new CGPoint(
                     SelectionIndicatorArrowLayer.Bounds.Size.Width / 2,
@@ -588,29 +588,29 @@ namespace ChristianHelle.Controls.iOS
         {
             var indicatorYOffset = (nfloat) 0.0f;
 
-            if (SelectionIndicatorLocation == HMSegmentedControlIndicatorLocation.Down)
+            if (SelectionIndicatorLocation == ScrollableSegmentedControlIndicatorLocation.Down)
                 indicatorYOffset = Bounds.Size.Height - SelectionIndicatorHeight + selectionIndicatorEdgeInsets.Bottom;
-            else if (SelectionIndicatorLocation == HMSegmentedControlIndicatorLocation.Up)
+            else if (SelectionIndicatorLocation == ScrollableSegmentedControlIndicatorLocation.Up)
                 indicatorYOffset = selectionIndicatorEdgeInsets.Top;
 
             var sectionWidth = (nfloat) 0.0f;
 
             switch (type)
             {
-                case HMSegmentedControlType.Text:
+                case ScrollableSegmentedControlType.Text:
                     sectionWidth = MeasureTitle(SelectedIndex).Width;
                     break;
-                case HMSegmentedControlType.Image:
+                case ScrollableSegmentedControlType.Image:
                     sectionWidth = sectionImages[SelectedIndex].Size.Width;
                     break;
-                case HMSegmentedControlType.TextAndImage:
+                case ScrollableSegmentedControlType.TextAndImage:
                     var stringWidth = MeasureTitle(SelectedIndex).Width;
                     var imageWidth = sectionImages[SelectedIndex].Size.Width;
                     sectionWidth = (nfloat) Math.Max(stringWidth, imageWidth);
                     break;
             }
 
-            if (SelectionStyle == HMSegmentedControlSelectionStyle.Arrow)
+            if (SelectionStyle == ScrollableSegmentedControlSelectionStyle.Arrow)
             {
                 var widthToEndOfSelectedSegment = segmentWidth * SelectedIndex + segmentWidth;
                 var widthToStartOfSelectedIndex = segmentWidth * SelectedIndex;
@@ -624,9 +624,9 @@ namespace ChristianHelle.Controls.iOS
                     SelectionIndicatorHeight);
             }
 
-            if (SelectionStyle == HMSegmentedControlSelectionStyle.TextWidthStripe &&
+            if (SelectionStyle == ScrollableSegmentedControlSelectionStyle.TextWidthStripe &&
                 sectionWidth <= segmentWidth &&
-                segmentWidthStyle != HMSegmentedControlWidthStyle.Dynamic)
+                segmentWidthStyle != ScrollableSegmentedControlWidthStyle.Dynamic)
             {
                 var widthToEndOfSelectedSegment = segmentWidth * SelectedIndex + segmentWidth;
                 var widthToStartOfSelectedIndex = segmentWidth * SelectedIndex;
@@ -639,7 +639,7 @@ namespace ChristianHelle.Controls.iOS
                     SelectionIndicatorHeight);
             }
 
-            if (segmentWidthStyle == HMSegmentedControlWidthStyle.Dynamic)
+            if (segmentWidthStyle == ScrollableSegmentedControlWidthStyle.Dynamic)
             {
                 var selectedSegmentOffset = (nfloat) 0.0f;
                 var i = 0;
@@ -667,7 +667,7 @@ namespace ChristianHelle.Controls.iOS
 
         private CGRect FrameForFillerSelectionIndicator()
         {
-            if (segmentWidthStyle == HMSegmentedControlWidthStyle.Dynamic)
+            if (segmentWidthStyle == ScrollableSegmentedControlWidthStyle.Dynamic)
             {
                 var selectedSegmentOffset = (nfloat) 0.0f;
                 var i = 0;
@@ -692,10 +692,10 @@ namespace ChristianHelle.Controls.iOS
             {
                 switch (type)
                 {
-                    case HMSegmentedControlType.Text:
+                    case ScrollableSegmentedControlType.Text:
                         return sectionTitles.Count;
-                    case HMSegmentedControlType.Image:
-                    case HMSegmentedControlType.TextAndImage:
+                    case ScrollableSegmentedControlType.Image:
+                    case ScrollableSegmentedControlType.TextAndImage:
                         return sectionImages.Count;
                 }
 
@@ -711,7 +711,7 @@ namespace ChristianHelle.Controls.iOS
             if (SectionCount > 0)
                 segmentWidth = Frame.Size.Width / SectionCount;
 
-            if (type == HMSegmentedControlType.Text && segmentWidthStyle == HMSegmentedControlWidthStyle.Fixed)
+            if (type == ScrollableSegmentedControlType.Text && segmentWidthStyle == ScrollableSegmentedControlWidthStyle.Fixed)
             {
                 for (var i = 0; i < sectionTitles.Count; i++)
                 {
@@ -719,7 +719,7 @@ namespace ChristianHelle.Controls.iOS
                     segmentWidth = (nfloat) Math.Max(stringWidth, segmentWidth);
                 }
             }
-            else if (type == HMSegmentedControlType.Text && segmentWidthStyle == HMSegmentedControlWidthStyle.Dynamic)
+            else if (type == ScrollableSegmentedControlType.Text && segmentWidthStyle == ScrollableSegmentedControlWidthStyle.Dynamic)
             {
                 segmentWidths = new List<float>();
                 for (var i = 0; i < sectionTitles.Count; i++)
@@ -728,7 +728,7 @@ namespace ChristianHelle.Controls.iOS
                     segmentWidths.Add((float) stringWidth);
                 }
             }
-            else if (type == HMSegmentedControlType.Image)
+            else if (type == ScrollableSegmentedControlType.Image)
             {
                 for (var i = 0; i < sectionImages.Count; i++)
                 {
@@ -737,8 +737,8 @@ namespace ChristianHelle.Controls.iOS
                     segmentWidth = (nfloat) Math.Max(imageWidth, segmentWidth);
                 }
             }
-            else if (type == HMSegmentedControlType.TextAndImage &&
-                     segmentWidthStyle == HMSegmentedControlWidthStyle.Fixed)
+            else if (type == ScrollableSegmentedControlType.TextAndImage &&
+                     segmentWidthStyle == ScrollableSegmentedControlWidthStyle.Fixed)
             {
                 for (var i = 0; i < sectionTitles.Count; i++)
                 {
@@ -746,8 +746,8 @@ namespace ChristianHelle.Controls.iOS
                     segmentWidth = (nfloat) Math.Max(stringWidth, segmentWidth);
                 }
             }
-            else if (type == HMSegmentedControlType.TextAndImage &&
-                     segmentWidthStyle == HMSegmentedControlWidthStyle.Dynamic)
+            else if (type == ScrollableSegmentedControlType.TextAndImage &&
+                     segmentWidthStyle == ScrollableSegmentedControlWidthStyle.Dynamic)
             {
                 for (var i = 0; i < sectionImages.Count; i++)
                 {
@@ -765,9 +765,9 @@ namespace ChristianHelle.Controls.iOS
 
         private nfloat TotalSegmentControlWidth()
         {
-            if (type == HMSegmentedControlType.Text && segmentWidthStyle == HMSegmentedControlWidthStyle.Fixed)
+            if (type == ScrollableSegmentedControlType.Text && segmentWidthStyle == ScrollableSegmentedControlWidthStyle.Fixed)
                 return sectionTitles.Count * segmentWidth;
-            if (segmentWidthStyle == HMSegmentedControlWidthStyle.Dynamic)
+            if (segmentWidthStyle == ScrollableSegmentedControlWidthStyle.Dynamic)
                 return segmentWidths.Sum();
             return sectionImages.Count * segmentWidth;
         }
@@ -793,7 +793,7 @@ namespace ChristianHelle.Controls.iOS
 
                 if (animated)
                 {
-                    if (SelectionStyle == HMSegmentedControlSelectionStyle.Arrow)
+                    if (SelectionStyle == ScrollableSegmentedControlSelectionStyle.Arrow)
                     {
                         AddScrollViewSubLayer(SelectionIndicatorArrowLayer);
                         SetSelectedSegmentIndex(index, false, true);
@@ -803,7 +803,7 @@ namespace ChristianHelle.Controls.iOS
                     if (SelectionIndicatorStripLayer.SuperLayer == null)
                     {
                         AddScrollViewSubLayer(SelectionIndicatorStripLayer);
-                        if (SelectionStyle == HMSegmentedControlSelectionStyle.Box &&
+                        if (SelectionStyle == ScrollableSegmentedControlSelectionStyle.Box &&
                             SelectionIndicatorBoxLayer.SuperLayer == null)
                             InsertScrollViewSubLayer(SelectionIndicatorBoxLayer, 0);
                         SetSelectedSegmentIndex(index, false, true);
@@ -859,7 +859,7 @@ namespace ChristianHelle.Controls.iOS
             CGRect rectForSelectedIndex;
             var selectedSegmentOffset = (nfloat) 0.0f;
 
-            if (segmentWidthStyle == HMSegmentedControlWidthStyle.Fixed)
+            if (segmentWidthStyle == ScrollableSegmentedControlWidthStyle.Fixed)
             {
                 rectForSelectedIndex = new CGRect(segmentWidth * SelectedIndex, 0, segmentWidth, Frame.Size.Height);
                 selectedSegmentOffset = Frame.Width / 2 - segmentWidth / 2;

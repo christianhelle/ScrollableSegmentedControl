@@ -1,6 +1,6 @@
 namespace ChristianHelle.Controls.iOS
 {
-    public enum HMSegmentedControlIndicatorLocation
+    public enum ScrollableSegmentedControlIndicatorLocation
     {
         Up,
         Down,

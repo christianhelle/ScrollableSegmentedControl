@@ -11,7 +11,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>ChristianHelle.Controls.iOS</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>HMSegmentedControl</AssemblyName>
+    <AssemblyName>ScrollableSegmentedControl</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,12 +40,14 @@
   <ItemGroup>
     <PackageReference Condition="'$(CreateUITestProject)' == true" Include="Xamarin.TestCloud.Agent" Version="0.21.7" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Controls.nuspec" />
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="DisposableCALayer.cs" />
     <Compile Include="DisposableCATextLayer.cs" />
     <Compile Include="HMScrollView.cs" />
-    <Compile Include="HMSegmentedControl.cs" />
+    <Compile Include="ScrollableSegmentedControl.cs" />
     <Compile Include="HMSegmentedControlBorderType.cs" />
     <Compile Include="HMSegmentedControlIndicatorLocation.cs" />
     <Compile Include="HMSegmentedControlSelectionStyle.cs" />

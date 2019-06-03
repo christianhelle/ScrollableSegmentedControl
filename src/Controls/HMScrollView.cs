@@ -3,7 +3,7 @@ using UIKit;
 
 namespace ChristianHelle.Controls.iOS
 {
-    public class HMScrollView : UIScrollView
+    public class ScrollableScrollView : UIScrollView
     {
         public override void TouchesBegan(NSSet touches, UIEvent evt)
         {

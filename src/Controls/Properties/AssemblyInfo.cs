@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("HMSegmentedControl")]
-[assembly: AssemblyDescription("A drop-in replacement for UISegmentedControl mimicking the style of the segmented control used in Google Currents and various other Google products. This is a C# port for Xamarin.iOS of HMSegmentedControl written by Hesham Abd-Elmegid")]
+[assembly: AssemblyTitle("ScrollableSegmentedControl")]
+[assembly: AssemblyDescription("A drop-in replacement for UISegmentedControl mimicking the style of the segmented control used in Google Currents and various other Google products. This is a C# port for Xamarin.iOS of ScrollableSegmentedControl written by Hesham Abd-Elmegid")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Christian Resma Helle")]
-[assembly: AssemblyProduct("HMSegmentedControl")]
+[assembly: AssemblyProduct("ScrollableSegmentedControl")]
 [assembly: AssemblyCopyright("Copyright © Christian Resma Helle 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

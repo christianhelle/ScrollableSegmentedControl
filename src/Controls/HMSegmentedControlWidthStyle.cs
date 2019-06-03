@@ -1,6 +1,6 @@
 namespace ChristianHelle.Controls.iOS
 {
-    public enum HMSegmentedControlWidthStyle
+    public enum ScrollableSegmentedControlWidthStyle
     {
         Fixed,
         Dynamic

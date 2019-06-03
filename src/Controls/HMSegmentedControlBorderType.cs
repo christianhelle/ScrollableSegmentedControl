@@ -1,6 +1,6 @@
 namespace ChristianHelle.Controls.iOS
 {
-    public enum HMSegmentedControlBorderType
+    public enum ScrollableSegmentedControlBorderType
     {
         None,
         Top,
