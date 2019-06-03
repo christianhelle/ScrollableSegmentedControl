@@ -5,7 +5,7 @@ using System.Linq;
 using Foundation;
 using UIKit;
 
-namespace HMSegmentedControlSample
+namespace ScrollableSegmentedControlSample
 {
     public class Application
     {

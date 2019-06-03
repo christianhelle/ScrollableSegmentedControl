@@ -8,8 +8,8 @@ using Foundation;
 
 namespace ChristianHelle.Controls.iOS.Samples
 {
-    [Register("SegmentedControlViewController")]
-    partial class SegmentedControlViewController
+    [Register("ScrollableSegmentedControlViewController")]
+    partial class ScrollableSegmentedControlViewController
     {
         void ReleaseDesignerOutlets()
         {

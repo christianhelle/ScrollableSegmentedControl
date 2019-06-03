@@ -62,9 +62,9 @@
     <CodesignKey>iPhone Developer</CodesignKey>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="HMSegmentedControlViewController.cs" />
-    <Compile Include="HMSegmentedControlViewController.designer.cs">
-      <DependentUpon>HMSegmentedControlViewController.cs</DependentUpon>
+    <Compile Include="SegmentedControlViewController.cs" />
+    <Compile Include="SegmentedControlViewController.designer.cs">
+      <DependentUpon>SegmentedControlViewController.cs</DependentUpon>
     </Compile>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
@@ -130,6 +130,11 @@
       <Visible>false</Visible>
     </ImageAsset>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Controls\Controls.csproj">
+      <Project>{0544F7F7-EE4C-44D9-B886-39B7851BAD6F}</Project>
+      <Name>Controls</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>
