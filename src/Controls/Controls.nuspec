@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <projectUrl>https://github.com/christianhelle/ScrollableSegmentedControl</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <copyright>Copyright © Christian Resma Helle 2015</copyright>
+    <tags>Xamarin.iOS, Scrollable UISegmentedControl, Scrollable Tab Control</tags>
+  </metadata>
+</package>

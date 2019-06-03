@@ -1,15 +1,26 @@
 using System;
-using UIKit;
 using CoreGraphics;
-using System.Collections.Generic;
-using Foundation;
+using UIKit;
 
-namespace HMSegmentedControlSample
+namespace ChristianHelle.Controls.iOS.Samples
 {
-    public partial class HMSegmentedControlViewController : UIViewController
+    public partial class SegmentedControlViewController : UIViewController
     {
-        public HMSegmentedControlViewController(IntPtr handle)
+        private readonly string[] sectionTitles =
+        {
+            "Cool",
+            "Great",
+            "Awesome",
+            "Not bad",
+            "Terrible"
+        };
+
+        public SegmentedControlViewController(IntPtr handle)
             : base(handle)
+        {
+        }
+
+        public SegmentedControlViewController()
         {
         }
 
@@ -17,7 +28,7 @@ namespace HMSegmentedControlSample
         {
             base.ViewDidLoad();
 
-            Title = "Segmented Control Demo";
+            Title = "Scrollable Segmented Control Demo";
             View.BackgroundColor = UIColor.Black;
             EdgesForExtendedLayout = UIRectEdge.None;
 
@@ -33,17 +44,12 @@ namespace HMSegmentedControlSample
 
         void CreateSegmentedControlWithTextWidthStripeDown(float y)
         {
-            var segmentedControl = new HMSegmentedControl(new List<string> {
-                "JUKE",
-                "Most Popular",
-                "All",
-                "Bookmarked"
-            });
+            var segmentedControl = new ScrollableSegmentedControl(sectionTitles);
             segmentedControl.Font = UIFont.FromName("STHeitiSC-Light", 18.0f);
             segmentedControl.Frame = new CGRect(0, y, View.Frame.Width, 40);
             segmentedControl.SegmentEdgeInset = new UIEdgeInsets(0, 10, 0, 10);
-            segmentedControl.SelectionStyle = HMSegmentedControlSelectionStyle.TextWidthStripe;
-            segmentedControl.SelectionIndicatorLocation = HMSegmentedControlIndicatorLocation.Down;
+            segmentedControl.SelectionStyle = ScrollableSegmentedControlSelectionStyle.TextWidthStripe;
+            segmentedControl.SelectionIndicatorLocation = ScrollableSegmentedControlIndicatorLocation.Down;
             segmentedControl.SelectionIndicatorColor = UIColor.Yellow;
             segmentedControl.TextColor = UIColor.White;
             segmentedControl.SelectedTextColor = UIColor.Yellow;
@@ -52,17 +58,12 @@ namespace HMSegmentedControlSample
 
         void CreateSegmentedControlWithFullWidthStripeDown(float y)
         {
-            var segmentedControl = new HMSegmentedControl(new List<string> {
-                "JUKE",
-                "Most Popular",
-                "All",
-                "Bookmarked"
-            });
+            var segmentedControl = new ScrollableSegmentedControl(sectionTitles);
             segmentedControl.Font = UIFont.FromName("STHeitiSC-Light", 18.0f);
             segmentedControl.Frame = new CGRect(0, y, View.Frame.Width, 40);
             segmentedControl.SegmentEdgeInset = new UIEdgeInsets(0, 10, 0, 10);
-            segmentedControl.SelectionStyle = HMSegmentedControlSelectionStyle.FullWidthStripe;
-            segmentedControl.SelectionIndicatorLocation = HMSegmentedControlIndicatorLocation.Down;
+            segmentedControl.SelectionStyle = ScrollableSegmentedControlSelectionStyle.FullWidthStripe;
+            segmentedControl.SelectionIndicatorLocation = ScrollableSegmentedControlIndicatorLocation.Down;
             segmentedControl.SelectionIndicatorColor = UIColor.Yellow;
             segmentedControl.TextColor = UIColor.White;
             segmentedControl.SelectedTextColor = UIColor.Yellow;
@@ -71,17 +72,12 @@ namespace HMSegmentedControlSample
 
         void CreateSegmentedControlWithTextWidthStripeUp(float y)
         {
-            var segmentedControl = new HMSegmentedControl(new List<string> {
-                "JUKE",
-                "Most Popular",
-                "All",
-                "Bookmarked"
-            });
+            var segmentedControl = new ScrollableSegmentedControl(sectionTitles);
             segmentedControl.Font = UIFont.FromName("STHeitiSC-Light", 18.0f);
             segmentedControl.Frame = new CGRect(0, y, View.Frame.Width, 40);
             segmentedControl.SegmentEdgeInset = new UIEdgeInsets(0, 10, 0, 10);
-            segmentedControl.SelectionStyle = HMSegmentedControlSelectionStyle.TextWidthStripe;
-            segmentedControl.SelectionIndicatorLocation = HMSegmentedControlIndicatorLocation.Up;
+            segmentedControl.SelectionStyle = ScrollableSegmentedControlSelectionStyle.TextWidthStripe;
+            segmentedControl.SelectionIndicatorLocation = ScrollableSegmentedControlIndicatorLocation.Up;
             segmentedControl.SelectionIndicatorColor = UIColor.Yellow;
             segmentedControl.TextColor = UIColor.White;
             segmentedControl.SelectedTextColor = UIColor.Yellow;
@@ -90,17 +86,12 @@ namespace HMSegmentedControlSample
 
         void CreateSegmentedControlWithFullWidthStripeUp(float y)
         {
-            var segmentedControl = new HMSegmentedControl(new List<string> {
-                "JUKE",
-                "Most Popular",
-                "All",
-                "Bookmarked"
-            });
+            var segmentedControl = new ScrollableSegmentedControl(sectionTitles);
             segmentedControl.Font = UIFont.FromName("STHeitiSC-Light", 18.0f);
             segmentedControl.Frame = new CGRect(0, y, View.Frame.Width, 40);
             segmentedControl.SegmentEdgeInset = new UIEdgeInsets(0, 10, 0, 10);
-            segmentedControl.SelectionStyle = HMSegmentedControlSelectionStyle.FullWidthStripe;
-            segmentedControl.SelectionIndicatorLocation = HMSegmentedControlIndicatorLocation.Up;
+            segmentedControl.SelectionStyle = ScrollableSegmentedControlSelectionStyle.FullWidthStripe;
+            segmentedControl.SelectionIndicatorLocation = ScrollableSegmentedControlIndicatorLocation.Up;
             segmentedControl.SelectionIndicatorColor = UIColor.Yellow;
             segmentedControl.TextColor = UIColor.White;
             segmentedControl.SelectedTextColor = UIColor.Yellow;
@@ -109,17 +100,12 @@ namespace HMSegmentedControlSample
 
         void CreateSegmentedControlWithBoxUp(float y)
         {
-            var segmentedControl = new HMSegmentedControl(new List<string> {
-                "JUKE",
-                "Most Popular",
-                "All",
-                "Bookmarked"
-            });
+            var segmentedControl = new ScrollableSegmentedControl(sectionTitles);
             segmentedControl.Font = UIFont.FromName("STHeitiSC-Light", 18.0f);
             segmentedControl.Frame = new CGRect(0, y, View.Frame.Width, 40);
             segmentedControl.SegmentEdgeInset = new UIEdgeInsets(0, 10, 0, 10);
-            segmentedControl.SelectionStyle = HMSegmentedControlSelectionStyle.Box;
-            segmentedControl.SelectionIndicatorLocation = HMSegmentedControlIndicatorLocation.Up;
+            segmentedControl.SelectionStyle = ScrollableSegmentedControlSelectionStyle.Box;
+            segmentedControl.SelectionIndicatorLocation = ScrollableSegmentedControlIndicatorLocation.Up;
             segmentedControl.SelectionIndicatorColor = UIColor.Yellow;
             segmentedControl.TextColor = UIColor.White;
             segmentedControl.SelectedTextColor = UIColor.Yellow;
@@ -128,17 +114,12 @@ namespace HMSegmentedControlSample
 
         void CreateSegmentedControlWithBoxDown(float y)
         {
-            var segmentedControl = new HMSegmentedControl(new List<string> {
-                "JUKE",
-                "Most Popular",
-                "All",
-                "Bookmarked"
-            });
+            var segmentedControl = new ScrollableSegmentedControl(sectionTitles);
             segmentedControl.Font = UIFont.FromName("STHeitiSC-Light", 18.0f);
             segmentedControl.Frame = new CGRect(0, y, View.Frame.Width, 40);
             segmentedControl.SegmentEdgeInset = new UIEdgeInsets(0, 10, 0, 10);
-            segmentedControl.SelectionStyle = HMSegmentedControlSelectionStyle.Box;
-            segmentedControl.SelectionIndicatorLocation = HMSegmentedControlIndicatorLocation.Down;
+            segmentedControl.SelectionStyle = ScrollableSegmentedControlSelectionStyle.Box;
+            segmentedControl.SelectionIndicatorLocation = ScrollableSegmentedControlIndicatorLocation.Down;
             segmentedControl.SelectionIndicatorColor = UIColor.Yellow;
             segmentedControl.TextColor = UIColor.White;
             segmentedControl.SelectedTextColor = UIColor.Yellow;

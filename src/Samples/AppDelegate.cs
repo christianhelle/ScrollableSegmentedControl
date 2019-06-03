@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
 using Foundation;
 using UIKit;
 
-namespace HMSegmentedControlSample
+namespace ChristianHelle.Controls.iOS.Samples
 {
     // The UIApplicationDelegate for the application. This class is responsible for launching the
     // User Interface of the application, as well as listening (and optionally responding) to
@@ -20,7 +16,15 @@ namespace HMSegmentedControlSample
             get;
             set;
         }
-		
+
+        public override bool FinishedLaunching(UIApplication application, NSDictionary launchOptions)
+        {
+            Window = new UIWindow(UIScreen.MainScreen.Bounds);
+            Window.RootViewController = new SegmentedControlViewController();
+            Window.MakeKeyAndVisible();
+            return true;
+        }
+
         // This method is invoked when the application is about to move from active to inactive state.
         // OpenGL applications should use this method to pause.
         public override void OnResignActivation(UIApplication application)
