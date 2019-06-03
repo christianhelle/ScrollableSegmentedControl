@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Christian Resma Helle")]
 [assembly: AssemblyProduct("HMSegmentedControl")]
-[assembly: AssemblyCopyright("Copyright © Christian Resma Helle  2015")]
+[assembly: AssemblyCopyright("Copyright © Christian Resma Helle 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
