@@ -6,7 +6,7 @@ namespace ChristianHelle.Controls.iOS.Samples
 {
     public partial class SegmentedControlViewController : UIViewController
     {
-        private readonly string[] sectionTitles = 
+        private readonly string[] sectionTitles =
         {
             "Cool",
             "Great",
@@ -17,6 +17,10 @@ namespace ChristianHelle.Controls.iOS.Samples
 
         public SegmentedControlViewController(IntPtr handle)
             : base(handle)
+        {
+        }
+
+        public SegmentedControlViewController()
         {
         }
 
