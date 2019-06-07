@@ -59,3 +59,7 @@ enum ScrollableSegmentedControlWidthStyle
 }
 ```
 
+
+For tips and tricks on software development, check out [my blog](https://christian-helle.blogspot.com)
+
+If you find this useful and feel a bit generous then feel free to [buy me a coffee](https://www.buymeacoffee.com/christianhelle) :)
