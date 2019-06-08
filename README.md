@@ -6,11 +6,15 @@ A drop-in replacement for UISegmentedControl mimicking the style of the segmente
 
 A C# port for Xamarin.iOS of HMSegmentedControl written by Hesham Abd-Elmegid (https://github.com/HeshamMegid/HMSegmentedControl). 
 
+## Screenshot
+
+![ScrollableSegmentedControl](https://github.com/christianhelle/scrollablesegmentedcontrol/raw/master/images/screenshot.png)
+
 ## Usages
 
 Here's an example of how to create the ScrollableSegmentedControl
 
-```
+``` csharp
 private void CreateScrollableSegmentedControl()
 {
     var sectionTitles = new[] { "One", "Two", "Three", "Four", "Five", "Six" };
@@ -28,7 +32,7 @@ private void CreateScrollableSegmentedControl()
 
 Selection Indicator Position
 
-```
+``` csharp
 enum ScrollableSegmentedControlIndicatorLocation
 {
     Up,
@@ -39,7 +43,7 @@ enum ScrollableSegmentedControlIndicatorLocation
 
 Selection Style
 
-```
+``` csharp
 enum ScrollableSegmentedControlSelectionStyle
 {
     TextWidthStripe,
@@ -51,7 +55,7 @@ enum ScrollableSegmentedControlSelectionStyle
 
 Segment Width Styles
 
-```
+``` csharp
 enum ScrollableSegmentedControlWidthStyle
 {
     Fixed,
