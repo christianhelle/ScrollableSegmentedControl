@@ -13,15 +13,15 @@ Here's an example of how to create the ScrollableSegmentedControl
 ```
 private void CreateScrollableSegmentedControl()
 {
-    var segmentedControl = new ScrollableSegmentedControl(sectionTitles);
-    segmentedControl.Font = UIFont.FromName("STHeitiSC-Light", 18.0f);
-    segmentedControl.Frame = new CGRect(0, 20, View.Frame.Width, 40);
-    segmentedControl.SegmentEdgeInset = new UIEdgeInsets(0, 10, 0, 10);
-    segmentedControl.SelectionStyle = ScrollableSegmentedControlSelectionStyle.TextWidthStripe;
-    segmentedControl.SelectionIndicatorLocation = ScrollableSegmentedControlIndicatorLocation.Down;
-    segmentedControl.SelectionIndicatorColor = UIColor.Yellow;
-    segmentedControl.TextColor = UIColor.White;
-    segmentedControl.SelectedTextColor = UIColor.Yellow;
+    var sectionTitles = new[] { "One", "Two", "Three", "Four", "Five", "Six" };
+    var segmentedControl = new ScrollableSegmentedControl(sectionTitles)
+    {
+        Font = UIFont.FromName("STHeitiSC-Light", 18.0f),
+        Frame = new CGRect(0, 60, View.Frame.Width, 40),
+        SegmentEdgeInset = new UIEdgeInsets(0, 10, 0, 10),
+        SelectionStyle = ScrollableSegmentedControlSelectionStyle.FullWidthStripe,
+        SelectionIndicatorLocation = ScrollableSegmentedControlIndicatorLocation.Down
+    };
     View.AddSubview(segmentedControl);
 }
 ```
