@@ -12,6 +12,8 @@ A C# port for Xamarin.iOS of HMSegmentedControl written by Hesham Abd-Elmegid (h
 
 ## Usages
 
+The easiest way to get started with using this is by installing the [ScrollableSegmentedControl NuGet package](https://www.nuget.org/packages/scrollablesegmentedcontrol) to your Xamarin.iOS project
+
 Here's an example of how to create the ScrollableSegmentedControl
 
 ``` csharp
