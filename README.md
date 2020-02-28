@@ -1,4 +1,6 @@
-[![Build Status](https://christianhelle.visualstudio.com/ScrollableSegmentedControl/_apis/build/status/CI%20Build?branchName=master)](https://christianhelle.visualstudio.com/ScrollableSegmentedControl/_build/latest?definitionId=22&branchName=master) [![NuGet](https://img.shields.io/nuget/v/scrollablesegmentedcontrol.svg?style=flat-square)]( https://www.nuget.org/packages/scrollablesegmentedcontrol)
+[![Build Status](https://christianhelle.visualstudio.com/ScrollableSegmentedControl/_apis/build/status/CI%20Build?branchName=master)](https://christianhelle.visualstudio.com/ScrollableSegmentedControl/_build/latest?definitionId=22&branchName=master)
+[![NuGet](https://img.shields.io/nuget/dt/scrollablesegmentedcontrol.svg?style=flat-square)]( https://www.nuget.org/packages/scrollablesegmentedcontrol)
+[![NuGet](https://img.shields.io/nuget/v/scrollablesegmentedcontrol.svg?style=flat-square)]( https://www.nuget.org/packages/scrollablesegmentedcontrol)
 
 # ScrollableSegmentedControl
 
