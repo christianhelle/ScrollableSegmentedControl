@@ -16,7 +16,6 @@ namespace ChristianHelle.Controls.iOS
         private ScrollableScrollView scrollView;
         private readonly List<UIImage> sectionImages;
         private readonly List<UIImage> sectionSelectedImages;
-
         private readonly List<string> sectionTitles;
         private nfloat segmentWidth;
         private List<float> segmentWidths;
@@ -56,6 +55,16 @@ namespace ChristianHelle.Controls.iOS
 
         public Func<ScrollableSegmentedControl, string, int, bool, NSAttributedString> TitleFormatter { get; set; }
 
+
+        public string SelectedTitle
+        {
+            get
+            {
+                if (sectionTitles.Count > selectedIndex)
+                    return sectionTitles[selectedIndex];
+                return string.Empty;
+            }
+        }
         public UIColor BorderColor { get; set; }
         public bool TouchEnabled { get; set; }
         public bool UserDraggable { get; set; }

@@ -2,3 +2,4 @@
 **/obj/
 *.nupkg
 **/bin/*
+.mfractor
