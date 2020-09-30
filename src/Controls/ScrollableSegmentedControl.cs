@@ -60,8 +60,8 @@ namespace ChristianHelle.Controls.iOS
         {
             get
             {
-                if (sectionTitles.Count > selectedIndex)
-                    return sectionTitles[selectedIndex];
+                if (sectionTitles.Count > SelectedIndex)
+                    return sectionTitles[SelectedIndex];
                 return string.Empty;
             }
         }
