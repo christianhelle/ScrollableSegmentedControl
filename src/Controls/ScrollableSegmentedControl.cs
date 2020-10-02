@@ -913,7 +913,7 @@ namespace ChristianHelle.Controls.iOS
         {
             var attributes = new UIStringAttributes();
             if (Font != null)
-                attributes.Font = Font;
+                attributes.Font = SelectedFont??Font;
             if (SelectedTextColor != null)
                 attributes.ForegroundColor = SelectedTextColor;
             return attributes;
