@@ -10,6 +10,7 @@ namespace ChristianHelle.Controls.iOS
 {
     public class ScrollableSegmentedControl : UIControl
     {
+        private int selectedIndex;
         private ScrollableSegmentedControlBorderType borderType;
         private float borderWidth;
         public EventHandler<int> IndexChange;
@@ -68,7 +69,6 @@ namespace ChristianHelle.Controls.iOS
         public UIColor BorderColor { get; set; }
         public bool TouchEnabled { get; set; }
         public bool UserDraggable { get; set; }
-        public int SelectedIndex { get; set; }
         public UIFont Font { get; set; }
         public UIFont SelectedFont { get; set; }
         public UIColor TextColor { get; set; }
@@ -84,6 +84,15 @@ namespace ChristianHelle.Controls.iOS
         public CALayer SelectionIndicatorArrowLayer { get; set; }
         public CALayer SelectionIndicatorStripLayer { get; set; }
         public bool ShouldAnimateUserSelection { get; set; }
+
+        public int SelectedIndex
+        {
+            get => selectedIndex;
+            set
+            {
+                SetSelectedSegmentIndex(value);
+            }
+        }
 
         public ScrollableSegmentedControlBorderType BorderType
         {
