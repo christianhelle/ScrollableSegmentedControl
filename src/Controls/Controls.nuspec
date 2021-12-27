@@ -11,5 +11,9 @@
     <description>$description$</description>
     <copyright>Copyright © Christian Resma Helle 2015</copyright>
     <tags>Xamarin.iOS, Scrollable UISegmentedControl, Scrollable Tab Control</tags>
+    <readme>docs\README.md</readme>
   </metadata>
+  <files>
+    <file src="..\README.md" target="docs\" />
+  </files>
 </package>
